@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial Finance Portfolio | UK Market</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Mono:wght@300;400;500&family=Spectral:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0a0a0f;
+    --paper: #f5f0e8;
+    --gold: #c9a84c;
+    --gold-light: #e8d5a3;
+    --slate: #1a1a2e;
+    --mist: #8a8a9a;
+    --cream: #faf7f2;
+    --rule: #2a2a3e;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--ink);
+    color: var(--paper);
+    font-family: 'Spectral', serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: -12px; left: -12px;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+    opacity: 0.6;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,15,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--mist);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--gold); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 160px 60px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(52px, 5vw, 78px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--mist);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-bio {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #b0adc8;
+    max-width: 480px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--gold);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--ink);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover { color: var(--gold); border: 1px solid var(--gold); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-secondary {
+    padding: 14px 32px;
+    border: 1px solid var(--rule);
+    color: var(--mist);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Hero right - stats panel */
+  .hero-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 160px 60px 80px 40px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease 1.2s forwards;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .stat-card {
+    background: rgba(26,26,46,0.6);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--gold);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    border-left-color: var(--gold-light);
+    background: rgba(201,168,76,0.06);
+    transform: translateX(4px);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+
+  /* Divider rule */
+  .rule-divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 60px;
+  }
+
+  .rule-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .rule-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Expertise section */
+  .expertise {
+    padding: 0 60px 80px;
+  }
+
+  .section-header {
+    margin-bottom: 60px;
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .expertise-card {
+    background: var(--slate);
+    padding: 44px 36px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    border: 1px solid transparent;
+  }
+
+  .expertise-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
+
+  .expertise-card:hover { border-color: rgba(201,168,76,0.2); }
+  .expertise-card:hover::before { transform: scaleX(1); }
+
+  .expertise-icon {
+    font-size: 28px;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .expertise-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .expertise-desc {
+    font-size: 13px;
+    line-height: 1.8;
+    color: var(--mist);
+    margin-bottom: 24px;
+  }
+
+  .expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border: 1px solid var(--rule);
+    color: var(--mist);
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Tech stack */
+  .tech-stack {
+    padding: 80px 60px;
+    background: linear-gradient(135deg, rgba(26,26,46,0.4) 0%, transparent 100%);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  .tech-category h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tech-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(42,42,62,0.5);
+    transition: all 0.3s ease;
+  }
+
+  .tech-item:hover { padding-left: 8px; }
+
+  .tech-dot {
+    width: 4px; height: 4px;
+    background: var(--gold);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tech-name {
+    font-size: 13px;
+    color: #b0adc8;
+    transition: color 0.3s ease;
+  }
+
+  .tech-item:hover .tech-name { color: var(--paper); }
+
+  /* Projects / Case Studies */
+  .case-studies {
+    padding: 80px 60px;
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .case-card {
+    background: var(--slate);
+    padding: 48px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .case-card:hover { background: rgba(26,26,46,0.9); }
+
+  .case-card::after {
+    content: '→';
+    position: absolute;
+    bottom: 44px; right: 44px;
+    font-size: 20px;
+    color: var(--gold);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .case-card:hover::after { opacity: 1; transform: translateX(0); }
+
+  .case-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .case-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .case-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--mist);
+    margin-bottom: 32px;
+  }
+
+  .case-impact {
+    display: flex;
+    gap: 32px;
+  }
+
+  .impact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .impact-value {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  .impact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+
+  /* Timeline */
+  .experience {
+    padding: 80px 60px;
+    background: rgba(26,26,46,0.2);
+    border-top: 1px solid var(--rule);
+  }
+
+  .timeline {
+    margin-top: 60px;
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 52px 44px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 11px; height: 11px;
+    border: 2px solid var(--gold);
+    background: var(--ink);
+    border-radius: 50%;
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .timeline-role {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .timeline-company {
+    font-size: 13px;
+    color: var(--mist);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .timeline-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .timeline-points li {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #b0adc8;
+    display: flex;
+    gap: 12px;
+  }
+
+  .timeline-points li::before {
+    content: '—';
+    color: var(--gold);
+    flex-shrink: 0;
+    font-size: 12px;
+    margin-top: 1px;
+  }
+
+  /* Certifications */
+  .certifications {
+    padding: 80px 60px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 60px;
+  }
+
+  .cert-card {
+    border: 1px solid var(--rule);
+    padding: 28px 24px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .cert-card:hover { border-color: var(--gold); }
+
+  .cert-badge {
+    font-size: 24px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .cert-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--paper);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .cert-issuer {
+    font-size: 12px;
+    color: var(--mist);
+    font-style: italic;
+  }
+
+  /* Contact */
+  .contact {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .contact-headline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 5vw, 70px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .contact-headline em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .contact-sub {
+    font-size: 15px;
+    color: var(--mist);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    border: 1px solid var(--rule);
+    color: var(--paper);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .contact-link:hover { border-color: var(--gold); color: var(--gold); }
+
+  .contact-link.primary {
+    background: var(--gold);
+    color: var(--ink);
+    border-color: var(--gold);
+  }
+
+  .contact-link.primary:hover { background: transparent; color: var(--gold); }
+
+  /* Footer */
+  footer {
+    padding: 32px 60px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover { color: var(--gold); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--ink); }
+  ::-webkit-scrollbar-thumb { background: var(--gold); }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 30px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 140px 30px 60px; }
+    .hero-right { padding: 40px 30px 60px; display: none; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    .cases-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: repeat(2, 1fr); }
+    .rule-divider, .expertise, .tech-stack,
+    .case-studies, .experience, .certifications,
+    .contact { padding-left: 30px; padding-right: 30px; }
+    footer { padding: 24px 30px; flex-direction: column; gap: 16px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">CF · Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#tech">Tech Stack</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Commercial Finance · UK Market</p>
+    <h1 class="hero-name">
+      [Your Name]
+      <em>Here.</em>
+    </h1>
+    <p class="hero-title">Commercial Finance Manager</p>
+    <p class="hero-bio">
+      Finance professional with 10+ years driving commercial performance across FMCG and Healthcare multinationals. 
+      Bridging rigorous financial controls with cutting-edge technology to deliver measurable business impact.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary"><span>Let's Connect</span></a>
+      <a href="#cases" class="btn-secondary">View Case Studies</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-grid-bg"></div>
+    <div class="stat-card">
+      <div class="stat-number">£40M+</div>
+      <div class="stat-label">P&L Responsibility Managed</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Years in Multinationals · FMCG & Healthcare</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">SOX</div>
+      <div class="stat-label">Internal Controls & Compliance Expert</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">4 ERP</div>
+      <div class="stat-label">SAP · Salesforce · TM1 · OneStream</div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="rule-divider">
+  <div class="rule-line"></div>
+  <div class="rule-text">Areas of Expertise</div>
+  <div class="rule-line"></div>
+</div>
+
+<!-- Expertise -->
+<section class="expertise" id="expertise">
+  <div class="section-header">
+    <span class="section-number">01 — Expertise</span>
+    <h2 class="section-title">Where Finance <em>meets</em><br>Technology</h2>
+  </div>
+
+  <div class="expertise-grid">
+    <div class="expertise-card">
+      <span class="expertise-icon">📊</span>
+      <h3 class="expertise-name">Commercial Finance & FP&A</h3>
+      <p class="expertise-desc">Full P&L ownership, strategic business partnering, revenue forecasting and variance analysis in fast-paced FMCG environments.</p>
+      <div class="expertise-tags">
+        <span class="tag">FP&A</span>
+        <span class="tag">Budgeting</span>
+        <span class="tag">Forecasting</span>
+        <span class="tag">Business Partnering</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <span class="expertise-icon">🔒</span>
+      <h3 class="expertise-name">SOX Controls & Compliance</h3>
+      <p class="expertise-desc">Design and implementation of robust internal control frameworks, SOX compliance management, and risk mitigation across multinational operations.</p>
+      <div class="expertise-tags">
+        <span class="tag">SOX 404</span>
+        <span class="tag">Internal Controls</span>
+        <span class="tag">Risk Matrix</span>
+        <span class="tag">Audit Readiness</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <span class="expertise-icon">⚙️</span>
+      <h3 class="expertise-name">ERP Systems Architecture</h3>
+      <p class="expertise-desc">End-to-end proficiency across enterprise platforms — from SAP financial modules to Salesforce CRM analytics and OneStream consolidation.</p>
+      <div class="expertise-tags">
+        <span class="tag">SAP FI/CO</span>
+        <span class="tag">Salesforce</span>
+        <span class="tag">TM1</span>
+        <span class="tag">OneStream</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <span class="expertise-icon">🐍</span>
+      <h3 class="expertise-name">Python for Finance</h3>
+      <p class="expertise-desc">Automating financial reporting, building predictive models, and replacing manual Excel processes with scalable Python solutions.</p>
+      <div class="expertise-tags">
+        <span class="tag">Pandas</span>
+        <span class="tag">Forecasting</span>
+        <span class="tag">Automation</span>
+        <span class="tag">Jupyter</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <span class="expertise-icon">📈</span>
+      <h3 class="expertise-name">Data Visualisation & BI</h3>
+      <p class="expertise-desc">Executive-grade dashboards translating complex financial data into actionable commercial insight using Power BI and Tableau.</p>
+      <div class="expertise-tags">
+        <span class="tag">Power BI</span>
+        <span class="tag">Tableau</span>
+        <span class="tag">DAX</span>
+        <span class="tag">Executive Reporting</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <span class="expertise-icon">🌍</span>
+      <h3 class="expertise-name">FMCG & Healthcare Sector</h3>
+      <p class="expertise-desc">Deep understanding of consumer goods dynamics, trade investment, gross-to-net management and pharmaceutical financial structures.</p>
+      <div class="expertise-tags">
+        <span class="tag">FMCG</span>
+        <span class="tag">Healthcare</span>
+        <span class="tag">Trade Finance</span>
+        <span class="tag">GTN</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tech Stack -->
+<section class="tech-stack" id="tech">
+  <div class="section-header">
+    <span class="section-number">02 — Technology</span>
+    <h2 class="section-title">Full <em>Tech Stack</em></h2>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-category">
+      <h4>ERP Platforms</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SAP FI / CO / BW</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Salesforce CRM Analytics</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">IBM TM1 / Planning Analytics</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">OneStream XF</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Oracle Hyperion</span></div>
+    </div>
+
+    <div class="tech-category">
+      <h4>Data & Analytics</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Python (Pandas, NumPy)</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Power BI + DAX</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Tableau Desktop / Public</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SQL / Power Query</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Google Looker Studio</span></div>
+    </div>
+
+    <div class="tech-category">
+      <h4>Finance & Controls</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SOX 404 Compliance</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">IFRS / US GAAP</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">FP&A / Budgeting</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Transfer Pricing</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Working Capital Mgmt</span></div>
+    </div>
+
+    <div class="tech-category">
+      <h4>Productivity</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Excel (Advanced / VBA)</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SharePoint / Teams</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Jupyter Notebooks</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">GitHub</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Notion</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Studies -->
+<section class="case-studies" id="cases">
+  <div class="section-header">
+    <span class="section-number">03 — Case Studies</span>
+    <h2 class="section-title">Delivering <em>Impact</em></h2>
+  </div>
+
+  <div class="cases-grid">
+    <div class="case-card">
+      <span class="case-tag">Python · SAP · FP&A</span>
+      <h3 class="case-title">Margin Leakage Detection at Scale</h3>
+      <p class="case-desc">Built an automated Python pipeline connecting SAP transactional data with trade investment records to identify gross margin erosion across 200+ SKUs in real time.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">£2.4M</span>
+          <span class="impact-label">Recovered Margin</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">-85%</span>
+          <span class="impact-label">Manual Effort</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <span class="case-tag">SOX Controls · Risk Framework</span>
+      <h3 class="case-title">SOX Remediation Programme</h3>
+      <p class="case-desc">Led end-to-end SOX 404 remediation across 3 business units following M&A integration. Designed control matrices, ran walkthroughs, and achieved zero material weaknesses at audit.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">0</span>
+          <span class="impact-label">Material Weaknesses</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">3 BU</span>
+          <span class="impact-label">Scope Coverage</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <span class="case-tag">Power BI · OneStream · Executive Reporting</span>
+      <h3 class="case-title">Real-Time P&L Dashboard</h3>
+      <p class="case-desc">Replaced 14-tab static Excel pack with a live Power BI solution connected to OneStream, enabling daily revenue tracking and scenario modelling for the CFO and commercial team.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">2 Days</span>
+          <span class="impact-label">Saved Per Month</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">Real-Time</span>
+          <span class="impact-label">Data Refresh</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <span class="case-tag">Salesforce · TM1 · Commercial Finance</span>
+      <h3 class="case-title">Sales Forecasting Accuracy Improvement</h3>
+      <p class="case-desc">Integrated Salesforce pipeline data with TM1 planning model to create a rolling 13-week demand signal, improving forecast accuracy and aligning commercial and supply chain.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">+18pp</span>
+          <span class="impact-label">Forecast Accuracy</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">£1.1M</span>
+          <span class="impact-label">Inventory Savings</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Experience -->
+<section class="experience" id="experience">
+  <div class="section-header">
+    <span class="section-number">04 — Experience</span>
+    <h2 class="section-title">Career <em>Journey</em></h2>
+  </div>
+
+  <div class="timeline">
+    <div class="timeline-item" data-animate>
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2019 — Present</div>
+      <h3 class="timeline-role">Senior Commercial Finance Manager</h3>
+      <p class="timeline-company">Johnson & Johnson · Consumer Health Division</p>
+      <ul class="timeline-points">
+        <li>Full P&L ownership for £40M+ consumer portfolio across EMEA markets</li>
+        <li>SOX controls owner for Revenue Recognition and GTN workstream</li>
+        <li>Led digital transformation of FP&A function from Excel to OneStream + Power BI</li>
+        <li>Business partner to VP Sales, Marketing and Supply Chain leadership</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item" data-animate>
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2015 — 2019</div>
+      <h3 class="timeline-role">Commercial Finance Analyst → Manager</h3>
+      <p class="timeline-company">Johnson & Johnson · MedTech</p>
+      <ul class="timeline-points">
+        <li>Managed annual budget cycle and monthly rolling forecast for surgical business unit</li>
+        <li>Deployed SAP S/4HANA migration for Finance function across 2 markets</li>
+        <li>Built Python automation for month-end close, reducing cycle time by 3 days</li>
+      </ul>
+    </div>
+
+    <div class="timeline-item" data-animate>
+      <div class="timeline-dot"></div>
+      <div class="timeline-period">2012 — 2015</div>
+      <h3 class="timeline-role">Finance Business Analyst</h3>
+      <p class="timeline-company">FMCG Multinational</p>
+      <ul class="timeline-points">
+        <li>Supported trade investment governance and pricing analysis for key accounts</li>
+        <li>Developed executive reporting suite in Tableau for commercial leadership</li>
+        <li>First exposure to TM1 implementation and financial consolidation processes</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- Certifications -->
+<section class="certifications" id="certs">
+  <div class="section-header">
+    <span class="section-number">05 — Credentials</span>
+    <h2 class="section-title">Qualifications &amp; <em>Certifications</em></h2>
+  </div>
+
+  <div class="cert-grid">
+    <div class="cert-card">
+      <span class="cert-badge">🏛️</span>
+      <div class="cert-name">CIMA Qualified</div>
+      <div class="cert-issuer">Chartered Institute of Management Accountants</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-badge">📊</span>
+      <div class="cert-name">PL-300 Power BI Data Analyst</div>
+      <div class="cert-issuer">Microsoft Certified</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-badge">☁️</span>
+      <div class="cert-name">Salesforce Business Analyst</div>
+      <div class="cert-issuer">Salesforce Certified</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-badge">🐍</span>
+      <div class="cert-name">Python for Finance</div>
+      <div class="cert-issuer">Coursera / CFI</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-badge">⚙️</span>
+      <div class="cert-name">SAP FI/CO Associate</div>
+      <div class="cert-issuer">SAP Certified</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-badge">📈</span>
+      <div class="cert-name">Tableau Desktop Specialist</div>
+      <div class="cert-issuer">Tableau / Salesforce</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-badge">🔍</span>
+      <div class="cert-name">Data Analytics Certificate</div>
+      <div class="cert-issuer">Google</div>
+    </div>
+    <div class="cert-card">
+      <span class="cert-badge">🎓</span>
+      <div class="cert-name">BSc Finance & Accounting</div>
+      <div class="cert-issuer">University — First Class</div>
+    </div>
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <p class="contact-eyebrow">Open to Opportunities · UK Market</p>
+  <h2 class="contact-headline">Ready to Drive<br><em>Your Numbers.</em></h2>
+  <p class="contact-sub">
+    Seeking Commercial Finance roles with UK-based multinationals in FMCG, Healthcare, or Consumer sectors. Available for immediate interviews.
+  </p>
+  <div class="contact-links">
+    <a href="https://linkedin.com" class="contact-link primary">
+      <span>LinkedIn Profile</span>
+    </a>
+    <a href="mailto:your@email.com" class="contact-link">
+      <span>Send Email</span>
+    </a>
+    <a href="https://github.com" class="contact-link">
+      <span>GitHub Portfolio</span>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2025 · Commercial Finance Portfolio · UK</div>
+  <ul class="footer-links">
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script>
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mouseX = 0, mouseY = 0;
+
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    cursor.style.left = mouseX + 'px';
+    cursor.style.top = mouseY + 'px';
+    ring.style.left = (mouseX - 4) + 'px';
+    ring.style.top = (mouseY - 4) + 'px';
+  });
+
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'scale(2.5)';
+      ring.style.transform = 'scale(1.5)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'scale(1)';
+      ring.style.transform = 'scale(1)';
+    });
+  });
+
+  // Timeline scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 150);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+  // Smooth nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => {
+      if (window.scrollY >= section.offsetTop - 200) {
+        current = section.getAttribute('id');
+      }
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+    });
+  });
+</script>
+
+</body>
+</html>
