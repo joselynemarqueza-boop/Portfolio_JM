@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Commercial Finance Portfolio | London, UK</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2C2C3E;
+    --paper: #F5F0E8;
+    --lavender: #8c698d;
+    --lavender-light: #d7c4cb;
+    --slate: #ece0e0;
+    --mist: #7A6B8A;
+    --cream: #FAF8F5;
+    --rule: #d7c4cb;
+    --accent-deep: #8c698d;
+    --card-bg: #ece0e0;
+    --hero-bg: #F5F0E8;
+    --muted: #a099b2;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--hero-bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(245,240,232,0.96);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .nav-logo {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: var(--lavender);
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--mist);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--lavender);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--lavender); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    padding: 160px 60px 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--lavender);
+    text-transform: uppercase;
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(52px, 5vw, 78px);
+    font-weight: 900;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--lavender);
+    display: block;
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(20px, 2vw, 26px);
+    font-weight: 400;
+    font-style: italic;
+    color: var(--mist);
+    margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-bio {
+    font-size: 15px;
+    line-height: 1.85;
+    color: #4A3F5C;
+    max-width: 480px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .btn-primary {
+    padding: 14px 32px;
+    background: var(--lavender);
+    color: var(--ink);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--hero-bg);
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary:hover { color: var(--lavender); border: 1px solid var(--lavender); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-secondary {
+    padding: 14px 32px;
+    border: 1px solid var(--rule);
+    color: var(--mist);
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-secondary:hover { border-color: var(--lavender); color: var(--lavender); }
+
+  /* Hero right - stats panel */
+  .hero-right {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 160px 60px 80px 40px;
+    opacity: 0;
+    animation: fadeIn 1.2s ease 1.2s forwards;
+  }
+
+  .hero-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(155,114,207,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(155,114,207,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .stat-card {
+    background: rgba(237,232,245,0.8);
+    border: 1px solid var(--rule);
+    border-left: 3px solid var(--lavender);
+    padding: 28px 32px;
+    margin-bottom: 16px;
+    position: relative;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .stat-card:hover {
+    border-left-color: var(--lavender-light);
+    background: rgba(155,114,207,0.08);
+    transform: translateX(4px);
+  }
+
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 42px;
+    font-weight: 700;
+    color: var(--lavender);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+
+  /* Divider rule */
+  .rule-divider {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 60px;
+  }
+
+  .rule-line {
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .rule-text {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    color: var(--lavender);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* Expertise section */
+  .expertise {
+    padding: 0 60px 80px;
+  }
+
+  .section-header {
+    margin-bottom: 60px;
+  }
+
+  .section-number {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--lavender);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 54px);
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  .section-title em {
+    font-style: italic;
+    color: var(--lavender);
+  }
+
+  .expertise-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .expertise-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-top: 3px solid transparent;
+    padding: 36px 30px 32px;
+    border-radius: 2px;
+    position: relative;
+    transition: all 0.35s ease;
+  }
+
+  .expertise-card:hover {
+    border-top-color: var(--lavender);
+    box-shadow: 0 8px 32px rgba(155,114,207,0.12);
+    transform: translateY(-3px);
+  }
+
+  .expertise-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .expertise-desc {
+    font-size: 13px;
+    line-height: 1.85;
+    color: var(--mist);
+    margin-bottom: 22px;
+  }
+
+  .expertise-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    border-top: 1px solid var(--rule);
+    padding-top: 16px;
+  }
+
+  .card-impact {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 0 0;
+    margin-top: 16px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .card-impact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-weight: 700;
+    color: var(--accent-deep);
+    white-space: nowrap;
+    line-height: 1;
+  }
+
+  .card-impact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 8.5px; letter-spacing: 0.12em;
+    color: var(--mist);
+    text-transform: uppercase;
+    line-height: 1.6;
+  }
+
+  .tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    padding: 4px 10px;
+    border: 1px solid var(--rule);
+    color: var(--mist);
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .tag:hover { border-color: var(--lavender); color: var(--lavender); }
+
+  /* Tech stack */
+  .tech-stack {
+    padding: 80px 60px;
+    background: linear-gradient(135deg, rgba(237,232,245,0.6) 0%, transparent 100%);
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    margin-top: 60px;
+  }
+
+  .tech-category h4 {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    color: var(--lavender);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .tech-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(42,42,62,0.5);
+    transition: all 0.3s ease;
+  }
+
+  .tech-item:hover { padding-left: 8px; }
+
+  .tech-dot {
+    width: 4px; height: 4px;
+    background: var(--lavender);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .tech-name {
+    font-size: 13px;
+    color: #4A3F5C;
+    transition: color 0.3s ease;
+  }
+
+  .tech-item:hover .tech-name { color: var(--ink); }
+
+  /* Projects / Case Studies */
+  .case-studies {
+    padding: 80px 60px;
+  }
+
+  .cases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .case-card {
+    background: var(--slate);
+    padding: 48px 44px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    cursor: pointer;
+  }
+
+  .case-card:hover { background: rgba(225,218,240,0.95); }
+
+  .case-card::after {
+    content: '→';
+    position: absolute;
+    bottom: 44px; right: 44px;
+    font-size: 20px;
+    color: var(--lavender);
+    opacity: 0;
+    transform: translateX(-10px);
+    transition: all 0.3s ease;
+  }
+
+  .case-card:hover::after { opacity: 1; transform: translateX(0); }
+
+  .case-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--lavender);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .case-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 16px;
+  }
+
+  .case-desc {
+    font-size: 14px;
+    line-height: 1.75;
+    color: var(--mist);
+    margin-bottom: 32px;
+  }
+
+  .case-impact {
+    display: flex;
+    gap: 32px;
+  }
+
+  .impact-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .impact-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--lavender);
+  }
+
+  .impact-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+
+  /* Timeline */
+  .experience {
+    padding: 80px 60px;
+    background: rgba(237,232,245,0.4);
+    border-top: 1px solid var(--rule);
+  }
+
+  .timeline {
+    margin-top: 60px;
+    position: relative;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--lavender), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 52px 44px;
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.6s ease;
+  }
+
+  .timeline-item.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .timeline-dot {
+    position: absolute;
+    left: -5px; top: 6px;
+    width: 11px; height: 11px;
+    border: 2px solid var(--lavender);
+    background: var(--hero-bg);
+    border-radius: 50%;
+  }
+
+  .timeline-period {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--lavender);
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+
+  .timeline-role {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .timeline-company {
+    font-size: 13px;
+    color: var(--mist);
+    margin-bottom: 16px;
+    font-style: italic;
+  }
+
+  .timeline-points {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .timeline-points li {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #4A3F5C;
+    display: flex;
+    gap: 12px;
+  }
+
+  .timeline-points li::before {
+    content: '—';
+    color: var(--lavender);
+    flex-shrink: 0;
+    font-size: 12px;
+    margin-top: 1px;
+  }
+
+  /* Certifications */
+  .certifications {
+    padding: 80px 60px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .cert-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-top: 60px;
+  }
+
+  .cert-card {
+    border: 1px solid var(--rule);
+    padding: 28px 24px;
+    transition: all 0.3s ease;
+    position: relative;
+  }
+
+  .cert-card:hover { border-color: var(--lavender); }
+
+  .cert-badge {
+    font-size: 24px;
+    margin-bottom: 14px;
+    display: block;
+  }
+
+  .cert-name {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: var(--ink);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+
+  .cert-issuer {
+    font-size: 12px;
+    color: var(--mist);
+    font-style: italic;
+  }
+
+  /* Contact */
+  .contact {
+    padding: 120px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .contact::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(155,114,207,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .contact-eyebrow {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    color: var(--lavender);
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .contact-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(40px, 5vw, 70px);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+
+  .contact-headline em {
+    font-style: italic;
+    color: var(--lavender);
+  }
+
+  .contact-sub {
+    font-size: 15px;
+    color: var(--mist);
+    max-width: 500px;
+    margin: 0 auto 48px;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 36px;
+    border: 1.5px solid var(--lavender);
+    color: var(--lavender);
+    background: transparent;
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+  }
+
+  .contact-link:hover { background: var(--lavender); color: #fff; border-color: var(--lavender); }
+
+  .contact-link.primary {
+    background: var(--lavender);
+    color: #fff;
+    border-color: var(--lavender);
+  }
+
+  .contact-link.primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+
+  /* Footer */
+  footer {
+    padding: 32px 60px;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-copy {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-transform: uppercase;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    color: var(--mist);
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+  }
+
+  .footer-links a:hover { color: var(--lavender); }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--hero-bg); }
+  ::-webkit-scrollbar-thumb { background: var(--lavender); }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    nav { padding: 20px 30px; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 140px 30px 60px; }
+    .hero-right { padding: 40px 30px 60px; display: none; }
+    .expertise-grid { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: repeat(2, 1fr); }
+    .cases-grid { grid-template-columns: 1fr; }
+    .cert-grid { grid-template-columns: repeat(2, 1fr); }
+    .rule-divider, .expertise, .tech-stack,
+    .case-studies, .experience, .certifications,
+    .contact { padding-left: 30px; padding-right: 30px; }
+    footer { padding: 24px 30px; flex-direction: column; gap: 16px; }
+    .nav-links { display: none; }
+  }
+</style>
+</head>
+<body>
+
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-logo">JM · Portfolio</div>
+  <ul class="nav-links">
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#tech">Tech Stack</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Commercial Finance · London, UK</p>
+    <h1 class="hero-name">
+      Joselyne Marquez
+      <em>Here.</em>
+    </h1>
+    <p class="hero-title">Commercial Finance Analyst</p>
+    <p class="hero-bio">
+      Finance professional with 7+ years driving commercial performance across FMCG and Healthcare multinationals. 
+      Bridging rigorous financial controls with cutting-edge technology to deliver measurable business impact.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary"><span>Let's Connect</span></a>
+      <a href="#projects" class="btn-secondary">View Projects</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-grid-bg"></div>
+    <div class="stat-card">
+      <div class="stat-number">$80MM+</div>
+      <div class="stat-label">Revenue Supported · Peru–Ecuador Cluster</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">60→96%</div>
+      <div class="stat-label">SOX Compliance · Adopted Across LATAM</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">71% Faster</div>
+      <div class="stat-label">Financial Reporting · Power BI Automation</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">50+ People</div>
+      <div class="stat-label">Trained Across Sales & Finance Teams</div>
+    </div>
+  </div>
+</section>
+
+<!-- Divider -->
+<div class="rule-divider">
+  <div class="rule-line"></div>
+  <div class="rule-text">Areas of Expertise</div>
+  <div class="rule-line"></div>
+</div>
+
+<!-- EXPERTISE -->
+<section class="expertise" id="expertise">
+  <div class="section-header">
+    <span class="section-number">01 — Expertise</span>
+    <h2 class="section-title">Core Finance <em>Capabilities</em></h2>
+    <p style="font-size:14px; color:var(--mist); margin-top:8px; max-width:520px; line-height:1.7; font-family:'DM Sans',sans-serif;">Six distinct capabilities covering the full scope of Commercial Finance — from building the forecast to transforming the systems that deliver it.</p>
+  </div>
+
+  <div class="expertise-grid">
+
+    <div class="expertise-card">
+      <h3 class="expertise-name">FP&A & Commercial Finance</h3>
+      <p class="expertise-desc">Owned month-end close for Ecuador and Peru — delivering P&L variance analysis and financial reporting across full planning cycles: Annual Budget, Mid-Year Forecast and Latest Estimate, first in TM1, then in OneStream. Contributed to AOP planning and rolling forecasts, always connecting financial results to commercial context and business drivers.</p>
+      <div class="expertise-tags">
+        <span class="tag">Month-End Close</span>
+        <span class="tag">Variance Analysis</span>
+        <span class="tag">Latest Estimate</span>
+        <span class="tag">AOP</span>
+        <span class="tag">P&L Reporting</span>
+      </div>
+      <div class="card-impact">
+        <span class="card-impact-value">$80MM+</span>
+        <span class="card-impact-label">P&L Closed Monthly<br>Ecuador & Peru</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <h3 class="expertise-name">SOX 404 & Financial Controls</h3>
+      <p class="expertise-desc">Designing and strengthening internal controls frameworks — not just compliance for its own sake, but as a foundation for accurate, auditable financial data. Built root-cause methodologies adopted as the LATAM regional standard.</p>
+      <div class="expertise-tags">
+        <span class="tag">SOX 404</span>
+        <span class="tag">Internal Controls</span>
+        <span class="tag">Risk Assessment</span>
+        <span class="tag">Governance</span>
+        <span class="tag">Audit Readiness</span>
+      </div>
+      <div class="card-impact">
+        <span class="card-impact-value">60→96%</span>
+        <span class="card-impact-label">SOX Compliance<br>LATAM Standard</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <h3 class="expertise-name">Business Partnering</h3>
+      <p class="expertise-desc">Translating financial complexity into clear commercial language for Sales, IT and Operations. Trusted by senior stakeholders to explain what's behind the numbers — and to challenge assumptions constructively.</p>
+      <div class="expertise-tags">
+        <span class="tag">Stakeholder Mgmt</span>
+        <span class="tag">Executive Comms</span>
+        <span class="tag">Cross-Functional</span>
+        <span class="tag">FMCG</span>
+        <span class="tag">Influencing</span>
+      </div>
+      <div class="card-impact">
+        <span class="card-impact-value">50+</span>
+        <span class="card-impact-label">Stakeholders Trained<br>Sales & Finance</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <h3 class="expertise-name">GTN, Margin & Commercial Analysis</h3>
+      <p class="expertise-desc">Analysing the drivers behind gross margin performance — gross-to-net deductions, Price Volume Mix (PVM), trade investment ROI and promotional spend effectiveness. Worked directly with sales representatives to control GTN and support commercial teams with the financial analysis needed to make better revenue and margin decisions.</p>
+      <div class="expertise-tags">
+        <span class="tag">GTN</span>
+        <span class="tag">PVM Analysis</span>
+        <span class="tag">Gross Margin</span>
+        <span class="tag">Trade Investment</span>
+        <span class="tag">Promotional ROI</span>
+      </div>
+      <div class="card-impact">
+        <span class="card-impact-value">100+</span>
+        <span class="card-impact-label">Clients · GTN & Margin<br>Tracked Peru–Ecuador</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <h3 class="expertise-name">Financial Insights & Reporting</h3>
+      <p class="expertise-desc">Turning close data into executive-ready insights — not just numbers on a page. Board packs, KPI dashboards and scenario analysis that arrive on time, tell a story and drive action across Commercial and Finance leadership.</p>
+      <div class="expertise-tags">
+        <span class="tag">Board Packs</span>
+        <span class="tag">KPI Dashboards</span>
+        <span class="tag">Scenario Planning</span>
+        <span class="tag">Data Storytelling</span>
+        <span class="tag">Monthly Close</span>
+      </div>
+      <div class="card-impact">
+        <span class="card-impact-value">7d → Day 2</span>
+        <span class="card-impact-label">Post-Close Reporting<br>Delivered to Commercial</span>
+      </div>
+    </div>
+
+    <div class="expertise-card">
+      <h3 class="expertise-name">Digital Finance Transformation</h3>
+      <p class="expertise-desc">Four transformation initiatives delivered: provisions migrated from manual Excel to Salesforce (−85%); TM1→OneStream deployment as LAN reference region; Tableau automated for Ecuador & Peru commercial teams; Power BI implemented for Day 2 Budget vs Actual reporting.</p>
+      <div class="expertise-tags">
+        <span class="tag">Salesforce Automation</span>
+        <span class="tag">OneStream Migration</span>
+        <span class="tag">Tableau Deployment</span>
+        <span class="tag">Power BI</span>
+        <span class="tag">Change Mgmt</span>
+      </div>
+      <div class="card-impact">
+        <span class="card-impact-value">4</span>
+        <span class="card-impact-label">Transformation<br>Initiatives Delivered</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- Tech Stack -->
+<section class="tech-stack" id="tech">
+  <div class="section-header">
+    <span class="section-number">02 — Technology</span>
+    <h2 class="section-title">Tools & <em>Platforms</em></h2>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-category">
+      <h4>ERP Platforms</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SAP FI / CO / BW</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Salesforce CRM Analytics</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">IBM TM1 / Planning Analytics</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">OneStream XF</span></div>
+    </div>
+
+    <div class="tech-category">
+      <h4>Data & Analytics</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Python (Pandas, NumPy)</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Power BI + DAX</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Tableau Desktop / Public</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SQL / Power Query</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">AI Tools: Copilot · Claude · ChatGPT</span></div>
+    </div>
+
+    <div class="tech-category">
+      <h4>Finance Frameworks & Standards</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SOX 404 Compliance</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">IFRS / US GAAP</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">GTN Framework</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Working Capital Standards</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Management Reporting Standards</span></div>
+    </div>
+
+    <div class="tech-category">
+      <h4>Productivity</h4>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Excel (Advanced / VBA)</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">SharePoint / Teams</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Jupyter Notebooks</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">GitHub</span></div>
+      <div class="tech-item"><div class="tech-dot"></div><span class="tech-name">Microsoft 365 Suite</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- Case Studies -->
+<section class="case-studies" id="cases">
+  <div class="section-header">
+    <span class="section-number">03 — Case Studies</span>
+   <h2 class="section-title">Real Impact, <em>Real Numbers</em></h2>
+  </div>
+
+  <div class="cases-grid">
+    <div class="case-card">
+      <span class="case-tag">Power BI · SAP · Salesforce · Kenvue</span>
+      <h3 class="case-title">Automated P&L Reporting Infrastructure</h3>
+      <p class="case-desc">The finance team was spending the majority of month-end consolidating data manually across systems — leaving little time for actual analysis. I designed and implemented Power BI dashboards integrating SKU-level profitability data directly from SAP and Salesforce, replacing a fragmented, error-prone workflow. The result was real-time commercial performance visibility enabling faster evaluation of sales, margin, and variance outcomes across 100 clients.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">−71%</span>
+          <span class="impact-label">Consolidation Time</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">$80MM</span>
+          <span class="impact-label">Revenue in Scope</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">Day 1</span>
+          <span class="impact-label">Post-Close Insights</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <span class="case-tag">SOX Controls · Root-Cause Methodology · J&J LATAM</span>
+      <h3 class="case-title">SOX Compliance Transformation</h3>
+      <p class="case-desc">Inherited a SOX compliance rate of 60% — well below regional expectations. I designed a structured root-cause analysis framework with error measurement indicators and standardised documentation to identify exactly where controls were failing. I presented findings to senior finance and commercial leadership, translating compliance gaps into business risk. The methodology was adopted as the regional standard across LATAM multi-country operations.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">60→96%</span>
+          <span class="impact-label">SOX Compliance</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">LATAM</span>
+          <span class="impact-label">Regional Standard</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">0</span>
+          <span class="impact-label">Material Weaknesses</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <span class="case-tag">Salesforce · Excel · Process Automation · J&J</span>
+      <h3 class="case-title">Provisions Process Automation</h3>
+      <p class="case-desc">The provisions process relied entirely on manual Excel entry — time-consuming, error-prone, and a recurring SOX risk. I led the end-to-end migration to automated Salesforce models, coordinating a cross-functional workstream across Finance, IT and Commercial teams to ensure the new workflow met both operational and compliance requirements. Processing time dropped by 85% and month-end rework was eliminated.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">−85%</span>
+          <span class="impact-label">Processing Time</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">3 Teams</span>
+          <span class="impact-label">Cross-Functional</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">✓ SOX</span>
+          <span class="impact-label">Compliant by Design</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="case-card">
+      <span class="case-tag">OneStream · TM1 · Change Management · Kenvue</span>
+      <h3 class="case-title">OneStream Implementation — LAN Region</h3>
+      <p class="case-desc">As part of the LAN regional finance team (Mexico, CAM, Colombia, Ecuador & Peru), contributed to Kenvue's migration from TM1 to OneStream. The LAN cluster was recognised as a regional reference for being the first to report and for proactive engagement throughout the process. Ensured full user readiness through multiple training sessions, coordinating between Finance and IT teams across markets.</p>
+      <div class="case-impact">
+        <div class="impact-item">
+          <span class="impact-value">1st</span>
+          <span class="impact-label">LATAM Region Live</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">20</span>
+          <span class="impact-label">Users Onboarded</span>
+        </div>
+        <div class="impact-item">
+          <span class="impact-value">Region</span>
+          <span class="impact-label">Templates Adopted</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+  
+
+<!-- Projects -->
+<section class="certifications" id="projects">
+  <div class="section-header">
+    <span class="section-number">04 — Projects</span>
+    <h2 class="section-title">Work <em>Samples</em></h2>
+    <p style="font-size:14px; color:var(--mist); margin-top:12px; font-family:'DM Sans',sans-serif;">A selection of projects showcasing analytical thinking, financial modelling and data visualisation skills.</p>
+  </div>
+
+  <div class="cert-grid">
+
+    <!-- PROJECT 1: Excel -->
+    <div class="cert-card" style="opacity:0.95;">
+      <span class="cert-badge">📊</span>
+      <div class="cert-name">Financial Model — Excel</div>
+      <div class="cert-issuer" style="margin-bottom:14px;">P&L Analysis · Budgeting · Variance</div>
+      <div style="font-size:11px; color:var(--mist); line-height:1.6; margin-bottom:20px;">
+        A dynamic financial model built in Excel demonstrating P&L forecasting, variance analysis and scenario planning across FMCG markets.
+      </div>
+      <a href="PEGAR_LINK_AQUI" target="_blank" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:#fff; background:var(--lavender); text-transform:uppercase; padding:8px 16px; text-decoration:none; display:inline-block; transition: all 0.3s ease;">→ View on Google Drive</a>
+    </div>
+
+    <!-- PROJECT 2: Tableau -->
+    <div class="cert-card" style="opacity:0.95;">
+      <span class="cert-badge">📈</span>
+      <div class="cert-name">Dashboard — Tableau</div>
+      <div class="cert-issuer" style="margin-bottom:14px;">Sales Performance · FMCG · KPIs</div>
+      <div style="font-size:11px; color:var(--mist); line-height:1.6; margin-bottom:20px;">
+        An interactive Tableau dashboard visualising commercial performance metrics, channel analysis and gross margin tracking for FMCG operations.
+      </div>
+      <a href="PEGAR_LINK_AQUI" target="_blank" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:#fff; background:var(--lavender); text-transform:uppercase; padding:8px 16px; text-decoration:none; display:inline-block; transition: all 0.3s ease;">→ View on Tableau Public</a>
+    </div>
+
+    <!-- PROJECT 3: Python -->
+    <div class="cert-card" style="opacity:0.95;">
+      <span class="cert-badge">🐍</span>
+      <div class="cert-name">Python App — Finance Automation</div>
+      <div class="cert-issuer" style="margin-bottom:14px;">Pandas · Data Analysis · Automation</div>
+      <div style="font-size:11px; color:var(--mist); line-height:1.6; margin-bottom:20px;">
+        A Python application automating a financial reporting workflow, demonstrating data manipulation, analysis and output generation using Pandas and NumPy.
+      </div>
+      <a href="PEGAR_LINK_AQUI" target="_blank" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:#fff; background:var(--lavender); text-transform:uppercase; padding:8px 16px; text-decoration:none; display:inline-block; transition: all 0.3s ease;">→ View on GitHub</a>
+    </div>
+
+    <!-- PROJECT 4: Business Case -->
+    <div class="cert-card" style="opacity:0.95;">
+      <span class="cert-badge">📄</span>
+      <div class="cert-name">Business Case Study</div>
+      <div class="cert-issuer" style="margin-bottom:14px;">Strategic Analysis · ROI · Recommendations</div>
+      <div style="font-size:11px; color:var(--mist); line-height:1.6; margin-bottom:20px;">
+        A structured business case demonstrating commercial decision-making, financial impact assessment and executive-ready recommendations aligned to UK market standards.
+      </div>
+      <a href="PEGAR_LINK_AQUI" target="_blank" style="font-family:'DM Mono',monospace; font-size:9px; letter-spacing:0.2em; color:#fff; background:var(--lavender); text-transform:uppercase; padding:8px 16px; text-decoration:none; display:inline-block; transition: all 0.3s ease;">→ View on Google Drive</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Contact -->
+<section class="contact" id="contact">
+  <p class="contact-eyebrow">Open to Opportunities · London, UK</p>
+  <h2 class="contact-headline">Let's Make the<br><em>Numbers Matter.</em></h2>
+  <p class="contact-sub">
+    Seeking Commercial Finance and FP&A roles with UK-based multinationals in FMCG, Consumer Health, or Retail. Based in London. Available immediately.
+  </p>
+  <div class="contact-links">
+    <a href="https://linkedin.com" class="contact-link primary">
+      <span>LinkedIn Profile</span>
+    </a>
+    <a href="/cdn-cgi/l/email-protection#72181d01171e0b1c175c1f130003071708321d07061e1d1d195c111d1f" class="contact-link">
+      <span>Send Email</span>
+    </a>
+    
+  </div>
+</section>
+
+<footer>
+  <div class="footer-copy">© 2025 · Commercial Finance Portfolio · UK</div>
+  <ul class="footer-links">
+    <li><a href="#expertise">Expertise</a></li>
+    <li><a href="#cases">Case Studies</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Timeline scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('visible');
+        }, i * 150);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.timeline-item').forEach(el => observer.observe(el));
+
+  // Smooth nav highlighting
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+
+  window.addEventListener('scroll', () => {
+    let current =
